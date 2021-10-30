@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Season Calculator</title>
+        
+    </head>
+    <body>
+        <section id="form">
+            <form id="user-form"> 
+                <h1>
+                    Calculate Days Left in Current Season (Meterological)
+                </h1>
+                <section class="hemisphere">
+                    <label for="hemisphere">Enter Hemisphere</label>
+                    <select name="hemisphereField" id="hemisphereField" required>
+                        <option value="" selected disabled hidden>Select hemisphere</option>
+                        <option value="northern" id="northern">Northern</option>
+                        <option value="southern" id="southern">Southern</option>
+                    </select>
+                </section>
+                <section class="dateSelecter" id="userDate">
+                    <span>
+                        <label for="day">Day:</label>
+                        <select id="day" name="day">
+                        </select>
+                      </span>
+                      <span>
+                        <label for="month">Month:</label>
+                        <select id="month" name="month" required>
+                            <option value="" selected disabled hidden>Select Month</option>
+                            <option>January</option>
+                            <option>February</option>
+                            <option>March</option>
+                            <option>April</option>
+                            <option>May</option>
+                            <option>June</option>
+                            <option>July</option>
+                            <option>August</option>
+                            <option>September</option>
+                            <option>October</option>
+                            <option>November</option>
+                            <option>December</option>
+                        </select>
+                      </span>
+                      <span>
+                        <label for="year">Year:</label>
+                        <select id="year" name="year">
+                        </select>
+                      </span>
+                </section>
+                <section class="submission" id="submission">
+                    <input type="submit" value="Submit" id="submit">
+                </section>
+            </form>
+        </section>
+        <section id="result">
+        </section>
+        <script src="/scripts/main.js"></script>
+    </body>
+    
+</html>
