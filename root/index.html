@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Season Calculator</title>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <section id="form">
@@ -14,9 +14,9 @@
                 <section class="hemisphere">
                     <label for="hemisphere">Enter Hemisphere</label>
                     <select name="hemisphereField" id="hemisphereField" required>
-                        <option value="" selected disabled hidden>Select hemisphere</option>
-                        <option value="northern" id="northern">Northern</option>
-                        <option value="southern" id="southern">Southern</option>
+                        <option value="" selected disabled hidden>Select Hemisphere</option>
+                        <option value="northern" id="northern">Northern Hemisphere</option>
+                        <option value="southern" id="southern">Southern Hemisphere</option>
                     </select>
                 </section>
                 <section class="dateSelecter" id="userDate">
@@ -24,8 +24,8 @@
                         <label for="day">Day:</label>
                         <select id="day" name="day">
                         </select>
-                      </span>
-                      <span>
+                    </span>
+                    <span>
                         <label for="month">Month:</label>
                         <select id="month" name="month" required>
                             <option value="" selected disabled hidden>Select Month</option>
@@ -43,15 +43,21 @@
                             <option>December</option>
                         </select>
                       </span>
-                      <span>
+                    <span>
                         <label for="year">Year:</label>
                         <select id="year" name="year">
                         </select>
-                      </span>
+                    </span>
                 </section>
                 <section class="submission" id="submission">
-                    <input type="submit" value="Submit" id="submit">
-                </section>
+                    <span>
+                       <input type="submit" value="Submit" id="submit">
+                        <input type="checkbox" class="inclusive_box" id="inclusive_box">
+                        <label for="inclusive_box">
+                            Include start date 
+                        </label>
+                    </span>
+            </section>
             </form>
         </section>
         <section id="result">

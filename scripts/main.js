@@ -144,7 +144,7 @@ function calculateDays() {
   var userYear =  parseInt(yearSelect.value, 10);
   var currSeason;
   var endMonth = 0;
-  var endSeasonDaysInMonth = 0;
+  var endDays = 0;
   var userHemisphere = hemisphere.value;
 
   // convert month to number and determine season
@@ -256,29 +256,29 @@ function calculateDays() {
       currSeason = 'Summer';
     }
   }
-
+  // set end month days and end month
   if(userHemisphere === 'northern') {
     switch(currSeason) {
       case 'Winter':
         endMonth = 2;
         if(isLeapYear) {
-          endSeasonDaysInMonth = 29;
+          endDays = 29;
         }
         else {
-          endSeasonDaysInMonth = 28;
+          endDays = 28;
         }
         break;
       case 'Spring':
         endMonth = 5;
-        endSeasonDaysInMonth = 31;
+        endDays = 31;
         break;
       case 'Summer':
         endMonth = 8;
-        endSeasonDaysInMonth = 31;
+        endDays = 31;
         break;
       case 'Fall':
         endMonth = 11;
-        endSeasonDaysInMonth = 30;
+        endDays = 30;
         break;
     }
   }
@@ -286,24 +286,24 @@ function calculateDays() {
     switch(currSeason) {
       case 'Winter':
         endMonth = 8;
-        endSeasonDaysInMonth = 31;
+        endDays = 31;
         break;
       case 'Spring':
         endMonth = 11;
-        endSeasonDaysInMonth = 30;
+        endDays = 30;
         break;
       case 'Summer':
         endMonth = 2;
         if(isLeapYear) {
-          endSeasonDaysInMonth = 29;
+          endDays = 29;
         }
         else {
-          endSeasonDaysInMonth = 28;
+          endDays = 28;
         }
         break;
       case 'Fall':
         endMonth = 5;
-        endSeasonDaysInMonth = 31;
+        endDays = 31;
         break;
     }
   }
@@ -316,18 +316,22 @@ function calculateDays() {
   
   var endDate = 0;
 
-  if(userMonth === 12) {
-    endDate = (userYear + 1) * 365 + endSeasonDaysInMonth;
+  if(userMonth === 12) { // if month is december, increment year by one
+    endDate = (userYear + 1) * 365 + endDays;
     endDate += countLeapYears(userYear+1, endMonth);
   }
   else {
-    endDate = userYear * 365 + endSeasonDaysInMonth;
+    endDate = userYear * 365 + endDays;
     endDate += countLeapYears (userYear, endMonth);
   }
 
   endDate += countDaysPassed(endMonth);
-   
+  var inclusive_date = $('.inclusive_box:checked').val();
   var res = endDate - userDate;
+  if(inclusive_date) {
+    res++;
+  }
+  
   showResult(res, currSeason);
 }
 
@@ -338,6 +342,6 @@ function showResult(data, currSeason) {
 
 function handleForm(event) {
   calculateDays();
-  event.preventDefault(); 
+  event.preventDefault(); // prevent page refresh
 } 
 form.addEventListener('submit', handleForm);
