@@ -7,12 +7,12 @@
     </head>
     <body>
         <section id="form">
-            <form id="user-form"> 
+            <form id="userForm"> 
                 <h1>
                     Calculate Days Left in Current Season (Meterological)
                 </h1>
                 <section class="hemisphere">
-                    <label for="hemisphere">Enter Hemisphere</label>
+                    <label for="hemisphere">Enter Hemisphere:</label>
                     <select name="hemisphereField" id="hemisphereField" required>
                         <option value="" selected disabled hidden>Select Hemisphere</option>
                         <option value="northern" id="northern">Northern Hemisphere</option>
@@ -54,15 +54,16 @@
                        <input type="submit" value="Submit" id="submit">
                         <input type="checkbox" class="inclusive_box" id="inclusive_box">
                         <label for="inclusive_box">
-                            Include start date 
+                            Include end date 
                         </label>
                     </span>
             </section>
             </form>
         </section>
-        <section id="result">
+        <section id="formResult">
         </section>
-        <script src="/scripts/main.js"></script>
+        <!--<script type="module" src="/static/scripts/fill_form.js"></script> -->
+        <script src="/static/scripts/main_copy.js"></script>
     </body>
     
 </html>

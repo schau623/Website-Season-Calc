@@ -1,15 +1,11 @@
-var result = document.getElementById('result');
+var result = document.getElementById('formResult');
 var submit = document.getElementById('submit');
 var form = document.getElementById('form');
 
-var FallBackSelector = document.querySelector('.dateSelector');
 var yearSelect = document.querySelector('#year');
 var monthSelect = document.querySelector('#month');
 var daySelect = document.querySelector('#day')
 var isLeapYear = false;
-var hemisphere = document.getElementById('hemisphereField');
-var userDaysInMonth = 0;
-var endSeasonDaysInMonth = 0;
 
 populateDays(monthSelect.value);
 populateYears();
@@ -31,9 +27,8 @@ function populateDays(month) {
     } else if(month ==="February") {
     // If month is February, calculate whether it is a leap year or not
         var year = yearSelect.value;
-        var isLeap = new Date(year, 1, 29).getMonth() == 1;
-        isLeapYear = isLeap;
-        if(isLeap) {
+        isLeapYear = new Date(year, 1, 29).getMonth() == 1;
+        if(isLeapYear) {
           daysInMonth = 29;
         }
          else {
@@ -74,21 +69,7 @@ function populateDays(month) {
       }
     }
   }
-  
 function populateYears() {
-    // get this year as a number
-    var date = new Date();
-    var year = date.getFullYear();
-  
-    // Make this year, and the 100 years before it available in the year <select>
-    for(var i = 0; i <= 100; i++) {
-      var option = document.createElement('option');
-      option.textContent = year-i;
-      yearSelect.appendChild(option);
-    }
-  }
-
-  function populateYears() {
     // get this year as a number
     var date = new Date();
     var year = date.getFullYear();
@@ -136,16 +117,17 @@ function countDaysPassed(month) {
   }
   return res;
 }
-
+//userYear, userMonth, userDay, endMonth, endDay
 function calculateDays() {
   var m = monthSelect.value;
   var userMonth = 0;
   var userDay = parseInt(daySelect.value, 10);
   var userYear =  parseInt(yearSelect.value, 10);
   var currSeason;
-  var endMonth = 0;
-  var endDays = 0;
-  var userHemisphere = hemisphere.value;
+  var endMonthNum = 0;
+  var endMonthStr;
+  var endDay = 0;
+  var userHemisphere = document.getElementById('hemisphereField').value;
 
   // convert month to number and determine season
   if(m == 'January') {
@@ -260,50 +242,58 @@ function calculateDays() {
   if(userHemisphere === 'northern') {
     switch(currSeason) {
       case 'Winter':
-        endMonth = 2;
+        endMonthNum = 2;
+        endMonthStr = 'February';
         if(isLeapYear) {
-          endDays = 29;
+          endDay = 29;
         }
         else {
-          endDays = 28;
+          endDay = 28;
         }
         break;
       case 'Spring':
-        endMonth = 5;
-        endDays = 31;
+        endMonthNum = 5;
+        endMonthStr = 'May';
+        endDay = 31;
         break;
       case 'Summer':
-        endMonth = 8;
-        endDays = 31;
+        endMonthNum = 8;
+        endMonthStr = 'August';
+        endDay = 31;
         break;
       case 'Fall':
-        endMonth = 11;
-        endDays = 30;
+        endMonthNum = 11;
+        endMonthStr = 'November';
+        endDay = 30;
         break;
     }
   }
   else {
     switch(currSeason) {
       case 'Winter':
-        endMonth = 8;
-        endDays = 31;
+        endMonthNum = 8;
+        endMonthStr = 'August';
+        endDay = 31;
         break;
       case 'Spring':
-        endMonth = 11;
-        endDays = 30;
+        endMonthNum = 11;
+        endMonthStr = 'November';
+        endDay = 30;
         break;
       case 'Summer':
-        endMonth = 2;
+        endMonthNum = 2;
+        endMonthStr = 'February';
         if(isLeapYear) {
-          endDays = 29;
+          endDay = 29;
         }
         else {
-          endDays = 28;
+          endDay = 28;
         }
         break;
       case 'Fall':
-        endMonth = 5;
-        endDays = 31;
+        endMonthNum = 5;
+        endMonthStr = 'May';
+        endDay = 31;
         break;
     }
   }
@@ -315,29 +305,28 @@ function calculateDays() {
   userDate += countLeapYears(userYear, userMonth);
   
   var endDate = 0;
+  var endYear = userYear;
 
   if(userMonth === 12) { // if month is december, increment year by one
-    endDate = (userYear + 1) * 365 + endDays;
-    endDate += countLeapYears(userYear+1, endMonth);
+    endYear++;
   }
-  else {
-    endDate = userYear * 365 + endDays;
-    endDate += countLeapYears (userYear, endMonth);
-  }
+  endDate = endYear * 365 + endDay;
+  endDate += countLeapYears (endYear, endMonthNum);
 
-  endDate += countDaysPassed(endMonth);
+  endDate += countDaysPassed(endMonthNum);
   var inclusive_date = $('.inclusive_box:checked').val();
   var res = endDate - userDate;
   if(inclusive_date) {
     res++;
   }
   
-  showResult(res, currSeason);
+  seasonEndShowResult(res, currSeason, endDay, endMonthStr, endYear);
 }
 
-function showResult(data, currSeason) {
-  result.innerHTML = `<p>Current Season: ${currSeason}</p>`;
-  result.innerHTML += `<p>Days Left This Season: ${data}</p>`;
+function seasonEndShowResult(data, currSeason, endDays, endMonthStr, endYear) {
+  formResult.innerHTML = `<p>Current Season: ${currSeason}</p>`;
+  formResult.innerHTML += `<p>Days Left This Season: ${data}</p>`;
+  formResult.innerHTML += `<p>Last Day of the Season: ${endDays} ${endMonthStr}, ${endYear}</p>`;
 }
 
 function handleForm(event) {
