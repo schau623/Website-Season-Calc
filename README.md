@@ -3,3 +3,5 @@ Calculates the number of days left in the current season bsaed on user input.
   
 ## Installation  
 To install, clone the repository and open using the live server extension.
+  
+![Alt text](schau_seasoncalc.PNG?raw=true "SC Season Calc")    
